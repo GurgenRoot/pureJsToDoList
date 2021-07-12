@@ -21,7 +21,7 @@ const createTodoItem = (title) => {
     editButton.innerText = 'Edit';
     editButton.className = 'edit';
 
-    const deleteButton = document.createElement('button')
+    const deleteButton = document.createElement('button');
     deleteButton.innerText = 'Delete';
     deleteButton.className = 'delete';
 
@@ -34,21 +34,59 @@ const createTodoItem = (title) => {
     listItem.appendChild(editButton);
     listItem.appendChild(deleteButton);
 
-    console.log(listItem)
+    bindEvents(listItem);
 
     return listItem;
-}
+};
 
 const addTodoItem = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    if (!addInput.value) return alert('The task cannot be empty')
+    if (!addInput.value) return alert('The task cannot be empty');
 
-    const todoItem = createTodoItem(addInput.value)
+    const todoItem = createTodoItem(addInput.value);
+
+    todoList.appendChild(todoItem);
 
     addInput.value = '';
 
+};
 
+function toggleTodoItem() {
+    const listItem = this.parentNode;
+    listItem.classList.toggle('completed');
 }
 
-todoForm.addEventListener('submit', addTodoItem)
+function editTodoItem({target}) {
+    const listItem = target.parentNode;
+    const title = listItem.querySelector('.title');
+    const editInput = listItem.querySelector('.textfield');
+    const isEditing = listItem.classList.contains('editing');
+
+    if (isEditing) {
+        title.innerText = editInput.value;
+        target.innerText = 'Edit';
+    } else {
+        editInput.value = title.innerText;
+        target.innerText = 'Save';
+    }
+
+    listItem.classList.toggle('editing');
+}
+
+function deleteTodoItem({target}) {
+    const listItem = target.parentNode;
+    todoList.removeChild(listItem);
+}
+
+const bindEvents = (todoItem) => {
+    const checkBox = todoItem.querySelector('.checkbox');
+    const editBtn =  todoItem.querySelector('button.edit');
+    const deleteBtn = todoItem.querySelector('button.delete');
+    checkBox.addEventListener('change', toggleTodoItem);
+    editBtn.addEventListener('click', editTodoItem);
+    deleteBtn.addEventListener('click', deleteTodoItem);
+
+};
+
+todoForm.addEventListener('submit', addTodoItem);
