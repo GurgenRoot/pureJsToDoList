@@ -1,0 +1,12 @@
+{
+  "name": "pureJsToDoList",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:GurgenRoot/pureJsToDoList.git",
+  "author": "mushegh-cpu <gurgen.alaverdyan89@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^5.44.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
